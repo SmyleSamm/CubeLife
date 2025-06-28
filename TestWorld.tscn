@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddy8ytovakop8"]
+[gd_scene load_steps=8 format=3 uid="uid://ddy8ytovakop8"]
 
 [ext_resource type="PackedScene" uid="uid://ck24ceusre62d" path="res://player.tscn" id="1_00t02"]
 [ext_resource type="PackedScene" uid="uid://hyootcjhom0a" path="res://chunk.tscn" id="2_mdxcd"]
+[ext_resource type="PackedScene" uid="uid://ltrrbt7ij1wh" path="res://world.tscn" id="2_qe2jq"]
+[ext_resource type="Script" path="res://fps.gd" id="4_woakp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s4ffn"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -28,6 +30,13 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("1_00t02")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 18, 0)
 
+[node name="World" parent="." instance=ExtResource("2_qe2jq")]
+
 [node name="Chunks" type="Node3D" parent="."]
 
 [node name="Chunk" parent="Chunks" instance=ExtResource("2_mdxcd")]
+
+[node name="FPS" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("4_woakp")
