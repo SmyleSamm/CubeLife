@@ -3,6 +3,7 @@ extends CharacterBody3D
 const SENSIVITY: float = 0.001
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
+const RUNNING = 10.0
 @onready var animations: AnimationPlayer = $Animations
 @onready var eyes: Camera3D = $Head/Eyes
 @onready var spiritBack: Camera3D = $Head/SpiritBack
@@ -64,24 +65,28 @@ func handleMouseInputs(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
+	#if not is_on_floor():
+		#velocity += get_gravity() * delta
+	
+	var run: float = int(Input.is_action_pressed("sprint")) * RUNNING
+	run = 1 + run
+	
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_pressed("jump"): #and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() * run
 	if direction:
 		animations.play("walk")
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
 		animations.stop()
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = 0
+		velocity.z = 0
+		velocity.y = 0
 
 	move_and_slide()
