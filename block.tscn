@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm1x4bryd3wcc"]
+
+[ext_resource type="Script" path="res://block.gd" id="1_3vgrb"]
+[ext_resource type="Material" uid="uid://cwljqgbudu2m4" path="res://gras.tres" id="2_joop7"]
+
+[node name="Block" type="CSGBox3D"]
+use_collision = true
+script = ExtResource("1_3vgrb")
+texture = ExtResource("2_joop7")
